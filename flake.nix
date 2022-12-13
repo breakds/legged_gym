@@ -42,6 +42,7 @@
           pytorchWithCuda11
           isaac-gym
           rsl-rl
+          matplotlib
         ]);
         pythonIcon = "f3e2";
       in pkgs.mkShell rec {
