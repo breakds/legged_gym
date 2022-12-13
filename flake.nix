@@ -43,6 +43,7 @@
           isaac-gym
           rsl-rl
           matplotlib
+          pudb
         ]);
         pythonIcon = "f3e2";
       in pkgs.mkShell rec {
