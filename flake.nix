@@ -16,6 +16,16 @@
       default = nixpkgs.lib.composeManyExtensions [
         inputs.ml-pkgs.overlays.torch-family
         inputs.ml-pkgs.overlays.simulators
+        (final: prev: {
+          pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+            (python-final: python-prev: {
+              rsl-rl = python-final.callPackage ./nix/pkgs/rsl_rl {
+                pytorch = python-final.pytorchWithCuda11;
+                torchvision = python-final.torchvisionWithCuda11;
+              };
+            })
+          ];
+        })
       ];
     };
   } // inputs.utils.lib.eachSystem [
@@ -31,6 +41,7 @@
         legged-gym-pyenv = pkgs.python38.withPackages (pyPkgs: with pyPkgs; [
           pytorchWithCuda11
           isaac-gym
+          rsl-rl
         ]);
         pythonIcon = "f3e2";
       in pkgs.mkShell rec {
